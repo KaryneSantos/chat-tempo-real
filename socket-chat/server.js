@@ -6,7 +6,6 @@ const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 
 async function main() {
-  // open the database file
   const db = await open({
     filename: 'chat.db',
     driver: sqlite3.Database
@@ -43,7 +42,6 @@ async function main() {
     });
   
     if (!socket.recovered) {
-      // if the connection state recovery was not successful
       try {
         await db.each('SELECT id, content FROM messages WHERE id > ?',
           [socket.handshake.auth.serverOffset || 0],
@@ -52,7 +50,6 @@ async function main() {
           }
         )
       } catch (e) {
-        // something went wrong
       }
     }
   });
